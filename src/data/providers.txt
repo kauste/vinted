@@ -1,0 +1,1 @@
+a:2:{i:0;a:3:{s:2:"id";i:1;s:5:"title";s:13:"Mondial Relay";s:5:"short";s:2:"MR";}i:1;a:3:{s:2:"id";i:2;s:5:"title";s:8:"La Poste";s:5:"short";s:2:"LP";}}
