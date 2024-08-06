@@ -36,7 +36,6 @@ In the `src/data` directory, you will find:
 3. **Data Preparation by CourierDataService**
 
    The constructor of `CourierPriceController` initializes a `CourierDataService` object. This service is responsible for preparing data for the `CourierPriceController`.
-   
         - `input.txt` is parsed into a two-level nested array
         - Data from `couriers.txt`, `sizes.txt`, and `prices.txt` is connected into a unified array, selecting only the required values (short names for sizes, couriers, and prices)
         - Separate price arrays are prepared for different sizes
