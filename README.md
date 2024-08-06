@@ -20,11 +20,11 @@ In the `src/data` directory, you will find:
 
 ### Initialization and Data Preparation
 
-1. **Instantiation of `CourierPriceController`
+1. **Instantiation of CourierPriceController**
 
    An instance of the `CourierPriceController` class is created and its method `countPricesAndDiscounts()` is invoked in `main.php`.
 
-3. **Data Collection and Processing by `DataCollector`
+2. **Data Collection and Processing by DataCollector**
 
    - The constructor  `CourierDataService` object instantiates a `DataCollector` object.
    - `DataCollector` couriers functions for:
@@ -33,7 +33,7 @@ In the `src/data` directory, you will find:
         - Selecting relevant information.
         - Connecting datasets if required.
 
-2. **Data Preparation by `CourierDataService`
+3. **Data Preparation by CourierDataService**
 
    The constructor of `CourierPriceController` initializes a `CourierDataService` object. This service is responsible for preparing data for the `CourierPriceController`.
         - `input.txt` is parsed into a two-level nested array.
