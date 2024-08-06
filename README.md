@@ -27,7 +27,7 @@ In the `src/data` directory, you will find:
 2. **Data Collection and Processing by DataCollector**
 
    The constructor  `CourierDataService` object instantiates a `DataCollector` object.
-   `DataCollector` couriers functions for:
+   `DataCollector` provides functions for:
     - Extracting data from text files
     - Unserializing data as needed
     - Selecting relevant information
