@@ -13,7 +13,7 @@ php main.php
 In the `src/data` directory, you will find:
 
 - `input.txt` contains purchase records in text format.
--`couriers.txt`, `sizes.txt`, and `prices.txt` contains files in PHP serialization format.
+- `couriers.txt`, `sizes.txt`, and `prices.txt` contains files in PHP serialization format.
 - `seeder.php` contains script that serializes data from arrays and seeds it into the aforementioned files.
 
 ## Workflow
