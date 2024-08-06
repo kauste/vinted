@@ -1,7 +1,7 @@
 <?php
 $providers = [
-    ['id' => 1, 'title' => 'Mondial Relay', 'short' => 'MR'],
-    ['id' => 2, 'title' => 'La Poste', 'short' => 'LP'],
+    ['id' => 1, 'title' => 'La Poste', 'short' => 'LP'],
+    ['id' => 2, 'title' => 'Mondial Relay', 'short' => 'MR'],
 ];
 $sizes = [
     ['id' => 1, 'title' => 'small', 'short' => 'S'],

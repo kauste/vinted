@@ -1,60 +1,94 @@
 <?php
 namespace Vinted;
-use Validator;
 
 class DataCollector {
-    
-    public function getProviders() : array
-    {
-        $providers = unserialize(file_get_contents('src/data/providers.txt'));
-        $providers = array_map(function($provider) {
-            return [
-                'id' => $provider['id'],
-                'short' => $provider['short']
-            ];
-        }, $providers);
-        return $providers;
 
-    }
-    public function getSizes() : array
+    public function getData($fileName) : string
     {
-        $sizes = unserialize(file_get_contents('src/data/sizes.txt'));
-        $sizes = array_map(function($size) {
-            return [
-                'id' => $size['id'],
-                'short' => $size['short']
-            ];
-        }, $sizes);
-        return $sizes;
-
+        return file_get_contents('src/data/' . $fileName . '.txt');
     }
-    public function getPriceList() : array
+    public function getSerializedData($fileName) : array 
     {
-        $providers = $this->getProviders();
-        $sizes = $this->getSizes();
-        $priceList = unserialize(file_get_contents('src/data/prices.txt'));
-
-        $priceList = array_map(function($price) use ($providers, $sizes){
-            $provider_id = array_search($price['provider_id'], array_column($providers, 'id'));
-            $size_id = array_search($price['size_id'], array_column($sizes, 'id'));
-            return [
-                'provider' => $providers[$provider_id]['short'],
-                'size' => $sizes[$size_id]['short'],
-                'price' => $price['price'],
-            ];
-        }, $priceList);
-        
-        return $priceList;
-
+        return unserialize($this->getData($fileName));
     }
-    public function getTransactions() : array
+    public function selectData($data, $keys) : array
     {
-        $inputData = file_get_contents('src/data/input.txt');
-        $inputArr = explode("\n", $inputData);
-        $inputArr = array_map(function($line){
-            return explode(' ', $line);
-        }, $inputArr);
-        
-        return $inputArr;
+        $selectedData = array_map(function($item) use ($keys) {
+            $filteredItem = array_filter($item, function($cellKey) use ($keys){
+                return in_array($cellKey, $keys);
+            }, ARRAY_FILTER_USE_KEY);
+            return $filteredItem;
+        }, $data);
+        return $selectedData;
     }
+    public function getSelectedData($fileName, $keys) : array
+    {
+        $data = $this->getSerializedData($fileName);
+        $selectedData = $this->selectData($data, $keys);
+        return $selectedData;
+    }
+    public function connectData($parentData, $childrenData) : array
+    {
+        $parentRecords = $parentData[0];
+        // Extract parent column keys and their aliases, make aliases keys and keys values
+        $parentColumnKeys = array_reduce($parentData[1],function($carry, $selection){
+                [$name, $rename] = explode(' as ', $selection);
+                $carry[$rename] = $name;
+                return $carry;
+        }) ;
+
+        // Map through parent records
+        $list = array_map(function($item) use ($parentColumnKeys, $childrenData){
+            //  Map and extract the required parent data
+            $parentReturn = array_map(function($key) use ($item){ 
+                return $item[$key];
+            }, $parentColumnKeys);
+            // Map through all children data
+            $childrenReturn = array_map(function($childData) use ($item){
+                $childRecords = $childData[0];
+                 // Extract child column keys and their aliases, make aliases keys and keys values
+                $childColumnKeys =  array_reduce($childData[1], function($carry,$selection){
+                    [$name, $rename] = explode(' as ', $selection);
+                    $carry[$rename] = $name;
+                    return $carry;
+                });
+                $idInParent = $childData[2];
+                $idInChild = $childData[3] ?? 'id';
+                // Find the child record where the child's ID matches the parent record's child_id
+                $childIndex = array_search($item[$idInParent], array_column($childRecords, $idInChild));
+                //  Map and extract the required child data
+                $childReturn = array_map(fn($selected) => $childRecords[$childIndex][$selected] , $childColumnKeys);
+                return $childReturn;
+            }, $childrenData);
+
+            // Merge parent and child data
+            return array_merge($parentReturn, ...$childrenReturn);
+
+        }, $parentRecords);
+        return $list;
+    }
+
+    // public function getPriceList() : array
+    // {
+    //     $providers = $this->getSelectedData('providers', ['id', 'short']);
+    //     $sizes = $this->getSelectedData('sizes', ['id', 'short']);
+    //     $priceList = $this->getSerializedData('prices');
+
+        // $priceList = $this->connectData($priceList, $sizes, 'size')
+        // $priceList = $this->connectData($priceList, $providers, 'privider')
+        // $priceList = $this->selectData($priceList, [])
+
+        // $priceList = array_map(function($price) use ($providers, $sizes){
+        //     $provider_index = array_search($price['provider_id'], array_column($providers, 'id'));
+        //     $size_index = array_search($price['size_id'], array_column($sizes, 'id'));
+        //     return [
+        //         'provider' => $providers[$provider_index]['short'],
+        //         'size' => $sizes[$size_index]['short'],
+        //         'price' => $price['price'],
+        //     ];
+        // }, $priceList);
+        // return $priceList;
+
+    // }
+
 }

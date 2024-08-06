@@ -1,6 +1,5 @@
 <?php
 namespace Vinted;
-use Vinted\DataCollector;
 
 class Validator {
 
@@ -9,25 +8,20 @@ class Validator {
         $pattern = '/\d{4}-\d{2}-\d{2}/';
         return preg_match($pattern, $value) === 1;
     }
-    public static function isAllSet($purchce, $lastIndex)
+    public static function isAllSet($purchase, $lastIndex)
     {
         foreach(range(0, $lastIndex) as $index){
-            if(!isset($purchce[$index])) return false;
+            if(!isset($purchase[$index])) return false;
         }
         return true;
     }
-    public static function isValidData($purchce, $lastIndex, $priceList) : bool
+    public static function isValidData($purchase, $lastIndex, $sizes, $providers) : bool
     {
-        // echo 'ce';
 
-        // print_r(array_column($priceList, 'provider'));
-
-        // echo 'ce';
-
-        return self::isAllSet($purchce, $lastIndex)
-               && self::isDate($purchce[0])  
-               && in_array($purchce[1], array_column($priceList, 'size')) 
-               && in_array($purchce[2], array_column($priceList, 'provider'))
+        return self::isAllSet($purchase, $lastIndex)
+               && self::isDate($purchase[0])  
+               && in_array($purchase[1], $sizes) 
+               && in_array($purchase[2], $providers)
                ;
 
     }
