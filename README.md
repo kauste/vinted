@@ -26,19 +26,19 @@ In the `src/data` directory, you will find:
 
 2. **Data Collection and Processing by DataCollector**
 
-   - The constructor  `CourierDataService` object instantiates a `DataCollector` object.
-   - `DataCollector` couriers functions for:
-        - Extracting data from text files
-        - Unserializing data as needed
-        - Selecting relevant information
-        - Connecting datasets if required
+   The constructor  `CourierDataService` object instantiates a `DataCollector` object.
+   `DataCollector` couriers functions for:
+    - Extracting data from text files
+    - Unserializing data as needed
+    - Selecting relevant information
+    - Connecting datasets if required
 
 3. **Data Preparation by CourierDataService**
 
    The constructor of `CourierPriceController` initializes a `CourierDataService` object. This service is responsible for preparing data for the `CourierPriceController`.
     - `input.txt` is parsed into a two-level nested array
     - Data from `couriers.txt`, `sizes.txt`, and `prices.txt` is connected into a unified array, selecting only the required values (short names for sizes, couriers, and prices)
-     - Separate price arrays are prepared for different sizes
+    - Separate price arrays are prepared for different sizes
 
     `CourierDataService` utilizes the static class `Functions` with abstract methods to facilitate data handling 
 
