@@ -15,13 +15,13 @@ class Validator {
         }
         return true;
     }
-    public static function isValidData($purchase, $lastIndex, $sizes, $providers) : bool
+    public static function isValidData($purchase, $lastIndex, $sizes, $couriers) : bool
     {
 
         return self::isAllSet($purchase, $lastIndex)
                && self::isDate($purchase[0])  
                && in_array($purchase[1], $sizes) 
-               && in_array($purchase[2], $providers)
+               && in_array($purchase[2], $couriers)
                ;
 
     }

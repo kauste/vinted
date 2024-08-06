@@ -70,19 +70,19 @@ class DataCollector {
 
     // public function getPriceList() : array
     // {
-    //     $providers = $this->getSelectedData('providers', ['id', 'short']);
+    //     $couriers = $this->getSelectedData('couriers', ['id', 'short']);
     //     $sizes = $this->getSelectedData('sizes', ['id', 'short']);
     //     $priceList = $this->getSerializedData('prices');
 
         // $priceList = $this->connectData($priceList, $sizes, 'size')
-        // $priceList = $this->connectData($priceList, $providers, 'privider')
+        // $priceList = $this->connectData($priceList, $couriers, 'privider')
         // $priceList = $this->selectData($priceList, [])
 
-        // $priceList = array_map(function($price) use ($providers, $sizes){
-        //     $provider_index = array_search($price['provider_id'], array_column($providers, 'id'));
+        // $priceList = array_map(function($price) use ($couriers, $sizes){
+        //     $courier_index = array_search($price['courier_id'], array_column($couriers, 'id'));
         //     $size_index = array_search($price['size_id'], array_column($sizes, 'id'));
         //     return [
-        //         'provider' => $providers[$provider_index]['short'],
+        //         'courier' => $couriers[$courier_index]['short'],
         //         'size' => $sizes[$size_index]['short'],
         //         'price' => $price['price'],
         //     ];

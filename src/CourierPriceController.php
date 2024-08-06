@@ -2,23 +2,23 @@
 namespace Vinted;
 use Vinted\Validator;
 use Vinted\Output;
-use Vinted\ProviderDataService;
+use Vinted\CourierDataService;
 
-class ProviderPriceController {
+class CourierPriceController {
 
     private $currMonth;
     private $discount = 10.00;
     private $l_SizePuchaceCount = 0;
     private $l_SizeDiscountUsed = False;
-    private $providerDataService;
+    private $courierDataService;
 
     function __construct(Type $var = null) {
-        $this->providerDataService = new ProviderDataService;
+        $this->courierDataService = new CourierDataService;
     }
-    private function countSmallSizePrice($provider) : array
+    private function countSmallSizePrice($courier) : array
     {
-        $shippingPrice = $this->providerDataService->s_priceList[$provider];
-        $maxDiscount = $shippingPrice - $this->providerDataService->s_SizeMinPrice;
+        $shippingPrice = $this->courierDataService->s_priceList[$courier];
+        $maxDiscount = $shippingPrice - $this->courierDataService->s_SizeMinPrice;
         if(!$this->discount || !$maxDiscount){
             $priceAndDiscount = [$shippingPrice, '-'];
         }
@@ -28,7 +28,7 @@ class ProviderPriceController {
             $priceAndDiscount = $purchaseInfo;
         }
         else {
-            $priceAndDiscount = [$this->providerDataService->s_SizeMinPrice, $maxDiscount];
+            $priceAndDiscount = [$this->courierDataService->s_SizeMinPrice, $maxDiscount];
         }
         $this->discount -= $maxDiscount;
         return $priceAndDiscount;
@@ -38,7 +38,7 @@ class ProviderPriceController {
         if($purchase[2] === 'LP'){
             $this->l_SizePuchaceCount++;
         }
-        $shippingPrice = $this->providerDataService->l_priceList[$purchase[2]];
+        $shippingPrice = $this->courierDataService->l_priceList[$purchase[2]];
         if($purchase[2] !== 'LP' 
         || $this->l_SizePuchaceCount % 3 !== 0 
         || $this->l_SizeDiscountUsed 
@@ -66,17 +66,17 @@ class ProviderPriceController {
     }
     public function countPricesAndDiscounts() : void
     {
-        $transactions = $this->providerDataService->getTransactions();
+        $transactions = $this->courierDataService->getTransactions();
 
-        $sizes = array_unique(array_column($this->providerDataService->priceList, 'size'));
-        $providers = array_unique(array_column($this->providerDataService->priceList, 'provider'));
+        $sizes = array_unique(array_column($this->courierDataService->priceList, 'size'));
+        $couriers = array_unique(array_column($this->courierDataService->priceList, 'courier'));
 
-        $counted = array_map(function($purchase) use ($sizes, $providers){
+        $counted = array_map(function($purchase) use ($sizes, $couriers){
             $this->monthWatch($purchase[0]);
             $addedData = match(true){
-                            !Validator::isValidData($purchase, 2, $sizes, $providers) => ['Ignored'],
+                            !Validator::isValidData($purchase, 2, $sizes, $couriers) => ['Ignored'],
                             $purchase[1] === 'S' => $this->countSmallSizePrice($purchase[2]),
-                            $purchase[1] === 'M' => [$this->providerDataService->m_priceList[$purchase[2]], '-'],
+                            $purchase[1] === 'M' => [$this->courierDataService->m_priceList[$purchase[2]], '-'],
                             $purchase[1] === 'L' => $this->countLardgeSizePrice($purchase),
                             default => ['Ignored'],
 

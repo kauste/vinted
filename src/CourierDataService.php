@@ -4,7 +4,7 @@ use Vinted\DataCollector;
 use Vinted\Functions;
 
 
-class ProviderDataService{
+class CourierDataService{
 
     private $dataCollector;
     public $priceList;
@@ -24,13 +24,13 @@ class ProviderDataService{
     }
     public function getPriceList() : array
     {
-        $providers = $this->dataCollector->getSerializedData('providers');
+        $couriers = $this->dataCollector->getSerializedData('couriers');
         $sizes = $this->dataCollector->getSerializedData('sizes');
         $priceList = $this->dataCollector->getSerializedData('prices');
 
         $priceList = $this->dataCollector->connectData( [$priceList, ['price as price']],
                             [
-                                [$providers, ['short as provider'], 'provider_id', 'id'],
+                                [$couriers, ['short as courier'], 'courier_id', 'id'],
                                 [$sizes, ['short as size'], 'size_id', 'id']
                             ]);
         return $priceList;
@@ -38,7 +38,7 @@ class ProviderDataService{
     public function getSizePriceList($size) : array
     {
         $sizePriceList = array_filter($this->priceList, fn($item) => $item['size'] === $size && is_float($item['price']));
-        $sizePriceList = array_combine(array_column($sizePriceList, 'provider'), array_column($sizePriceList, 'price'));
+        $sizePriceList = array_combine(array_column($sizePriceList, 'courier'), array_column($sizePriceList, 'price'));
         return $sizePriceList;
     }
     public function getTransactions() : array
