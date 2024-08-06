@@ -10,12 +10,6 @@ php main.php
 
 ## Data
 
-In src/data directory you can find:
-- input.txt file, where shipment price data is string
-- couriers.txt, sizes.txt and prices.txt files in PHP serialization format
-- seeder.php file, where data is serialized from array and seeded to previously mentioned files
-## Data
-
 In the `src/data` directory, you will find:
 
 - **`input.txt`** contains purchase records in text format.
