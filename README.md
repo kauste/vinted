@@ -8,6 +8,12 @@ To execute the script and obtain the results, run the following command:
 php main.php
 ```
 
+Command line for seeding data
+```bash
+php src/data/seeder.php
+```
+
+
 ## Data
 
 In the `src/data` directory, you will find:

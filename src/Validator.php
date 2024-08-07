@@ -3,10 +3,18 @@ namespace Vinted;
 
 class Validator {
 
-    public static function isDate($value) :bool
+    public static function isValidDate($date) :bool
     {
-        $pattern = '/\d{4}-\d{2}-\d{2}/';
-        return preg_match($pattern, $value) === 1;
+        $registerdDate = '2012-04-23';
+        $currDate = date('Y-m-d');
+        [$year, $month, $day] = explode('-', $date) + [null, null, null];
+        
+        return intval($year) 
+               && intval($month) 
+               && intval($day) 
+               && checkdate($month,$day, $year)
+               && $date <= $currDate
+               && $registerdDate <= $date;
     }
     public static function isAllSet($purchase, $lastIndex)
     {
@@ -19,7 +27,7 @@ class Validator {
     {
 
         return self::isAllSet($purchase, $lastIndex)
-               && self::isDate($purchase[0])  
+               && self::isValidDate($purchase[0])  
                && in_array($purchase[1], $sizes) 
                && in_array($purchase[2], $couriers)
                ;
