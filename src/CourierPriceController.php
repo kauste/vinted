@@ -70,21 +70,23 @@ class CourierPriceController {
 
         $sizes = array_unique(array_column($this->courierDataService->priceList, 'size'));
         $couriers = array_unique(array_column($this->courierDataService->priceList, 'courier'));
+        if($transactions && $sizes && $couriers){
+            $counted = array_map(function($purchase) use ($sizes, $couriers){
+                $this->monthWatch($purchase[0]);
+                $addedData = match(true){
+                                !Validator::isValidData($purchase, 2, $sizes, $couriers) => ['Ignored'],
+                                $purchase[1] === 'S' => $this->countSmallSizePrice($purchase[2]),
+                                $purchase[1] === 'M' => [$this->courierDataService->m_priceList[$purchase[2]], '-'],
+                                $purchase[1] === 'L' => $this->countLardgeSizePrice($purchase),
+                                default => ['Ignored'],
 
-        $counted = array_map(function($purchase) use ($sizes, $couriers){
-            $this->monthWatch($purchase[0]);
-            $addedData = match(true){
-                            !Validator::isValidData($purchase, 2, $sizes, $couriers) => ['Ignored'],
-                            $purchase[1] === 'S' => $this->countSmallSizePrice($purchase[2]),
-                            $purchase[1] === 'M' => [$this->courierDataService->m_priceList[$purchase[2]], '-'],
-                            $purchase[1] === 'L' => $this->countLardgeSizePrice($purchase),
-                            default => ['Ignored'],
+                            };
+                return [...$purchase, ...$addedData];
+            },$transactions);
+            $output = new Output;
+            $output->printStr($counted);
+        }
 
-                        };
-            return [...$purchase, ...$addedData];
-        },$transactions);
-        $output = new Output;
-        $output->printStr($counted);
     }
 
 }

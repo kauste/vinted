@@ -3,7 +3,6 @@
 ## Commandline
 
 To execute the script and obtain the results, run the following command:
-
 ```bash
 php main.php
 ```
@@ -13,6 +12,10 @@ Command line for seeding data
 php src/data/seeder.php
 ```
 
+Command line for testing
+```bash
+php ./vendor/bin/phpunit
+```
 
 ## Data
 

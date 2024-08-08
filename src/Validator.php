@@ -2,7 +2,23 @@
 namespace Vinted;
 
 class Validator {
+    public static function fileExists($path, $fileName)
+    {
+        if(!file_exists($path . $fileName)){
+            echo "\n\033[31m*** ERROR! File \"" .$fileName . "\" does not exist in directory \"". $path ."\" ***\033[0m\n";
+            return false;
+        }
+        return true;
+    }
+    public static function isSerialized($data): bool
+    {
 
+        if(!is_string($data) || (!@unserialize($data) && $data === 'b:0;')){
+            echo "\n\033[31m*** ERROR! File is not in PHP serialization format ***\033[0m\n";
+            return false;
+        }
+        return true;
+    }
     public static function isValidDate($date) :bool
     {
         $registerdDate = '2012-04-23';

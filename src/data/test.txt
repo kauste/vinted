@@ -1,1 +1,0 @@
-a:3:{i:0;a:3:{s:2:"id";i:1;s:4:"name";s:4:"John";s:7:"surname";s:5:"Brown";}i:1;a:3:{s:2:"id";i:2;s:4:"name";s:4:"Ieva";s:7:"surname";s:13:"Kučinskaitė";}i:2;a:3:{s:2:"id";i:3;s:4:"name";s:5:"Bradd";s:5:"short";s:4:"Pitt";}}

@@ -10,6 +10,6 @@ class Output{
             return implode(' ', $line);
         }, $arrayData);
         $outputSts = implode("\n",  $outputSts);
-        // print_r($outputSts);
+        print_r($outputSts);
     }
 }
