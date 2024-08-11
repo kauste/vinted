@@ -2,19 +2,18 @@
 
 ## Commandline
 
-Command line for seeding data
+To seed the data required for this project, run the following command:
 ```bash
 php src/data/seeder.php
 ```
 
-To execute the script and obtain the results, run the following command:
+To execute the main script and generate the results, use the following command:
 ```bash
 php main.php
 ```
 
-For running unit tests php version should be at least 8.2. You have to uncomment 4 line in main.php and run following commands
-
-Command line for testing
+To run the unit tests, ensure that your PHP version is at least 8.2. Before running the tests, uncomment the fourth line in `main.php`
+Install the necessary dependencies and run the tests with the following commands:
 ```bash
 composer install
 php ./vendor/bin/phpunit
@@ -26,6 +25,7 @@ In the `src/data` directory, you will find:
 
 - `input.txt` contains purchase records in text format.
 - `couriers.txt`, `sizes.txt`, and `prices.txt` contains files in PHP serialization format.
+- `test-text.txt`, `test-sizes.txt`, `test-prices.txt`, `test-couriers.txt` contains files for testing
 - `seeder.php` contains script that serializes data from arrays and seeds it into the aforementioned files.
 
 ## Workflow
