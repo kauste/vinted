@@ -2,18 +2,21 @@
 
 ## Commandline
 
-To execute the script and obtain the results, run the following command:
-```bash
-php main.php
-```
-
 Command line for seeding data
 ```bash
 php src/data/seeder.php
 ```
 
+To execute the script and obtain the results, run the following command:
+```bash
+php main.php
+```
+
+For running unit tests php version should be at least 8.2. You have to uncomment 4 line in main.php and run following commands
+
 Command line for testing
 ```bash
+composer install
 php ./vendor/bin/phpunit
 ```
 
