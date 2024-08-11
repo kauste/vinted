@@ -12,7 +12,7 @@ To execute the main script and generate the results, use the following command:
 php main.php
 ```
 
-To run the unit tests, ensure that your **PHP version is at least 8.2**. Before running the tests, **uncomment the fourth line** in `**main.php**`
+To run the unit tests, ensure that your **PHP version is at least 8.2**. Before running the tests, **uncomment the fourth line** in **`main.php`**
 Install the necessary dependencies and run the tests with the following commands:
 ```bash
 composer install
